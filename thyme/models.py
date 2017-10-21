@@ -6,3 +6,4 @@ class Snapshot(models.Model):
     owner = models.ForeignKey('auth.User', related_name='quotes', verbose_name=_('owner'))
     timestamp = models.DateTimeField()
     data = models.TextField()
+    agent = models.CharField(max_length=128)

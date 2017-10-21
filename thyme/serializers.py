@@ -8,11 +8,11 @@ class SnapshotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Snapshot
-        fields = ('id', 'timestamp', 'data', 'owner')
+        fields = ('id', 'timestamp', 'data', 'owner', 'agent')
         read_only = ('id',)
 
     def to_internal_value(self, data):
         return {
             'data': data,
-            'timestamp': parse(data['Time'])
+            'timestamp': parse(data['Time']),
         }
