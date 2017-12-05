@@ -1,0 +1,14 @@
+{
+    "runningProcesses": [{
+        "appBundle": "org.mozilla.firefox",
+        "isActive": false,
+        "launchDate": "2017-11-21T22:24:25Z",
+        "appName": "Firefox"
+    }, {
+        "appBundle": "com.google.Chrome",
+        "isActive": true,
+        "launchDate": "2017-11-21T22:24:25Z",
+        "appName": "Google Chrome"
+    }],
+    "timeCollected": "2017-11-22T09:53:58Z"
+}

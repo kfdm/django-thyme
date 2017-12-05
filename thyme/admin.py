@@ -5,5 +5,5 @@ from thyme import models
 
 @admin.register(models.Snapshot)
 class SnapshotAdmin(admin.ModelAdmin):
-    list_display = ('timestamp', 'agent', 'owner')
-    list_filter = ('owner',)
+    list_display = ('timestamp', 'slug', 'owner', 'score', 'active')
+    list_filter = ('owner', 'score', 'active')

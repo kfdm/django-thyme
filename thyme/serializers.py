@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from thyme import models
-from dateutil.parser import parse
 
 
 class SnapshotSerializer(serializers.ModelSerializer):
@@ -8,11 +7,13 @@ class SnapshotSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Snapshot
-        fields = ('id', 'timestamp', 'data', 'owner', 'agent')
-        read_only = ('id',)
+        fields = ('timestamp', 'owner', 'agent', 'score', 'active')
+        read_only = ('agent',)
 
-    def to_internal_value(self, data):
-        return {
-            'data': data,
-            'timestamp': parse(data['Time']),
-        }
+
+class BlacklistSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = models.Blacklist
+        fields = ('slug', 'owner')
