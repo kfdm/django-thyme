@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Snapshots</h1>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-header">{% include 'thyme/paginator.inc.html' %}</div>
+    <table class="table table-bordered">
+{% for object in object_list %}
+        <tr>
+            <td>{{ object.timestamp }}</td>
+            <td>{{ object.slug }}</td>
+            <td>{{ object.score }}</td>
+            <td>{{ object.active }}</td>
+        </tr>
+{% endfor %}
+    </table>
+    <div class="panel-footer">{% include 'thyme/paginator.inc.html' %}</div>
+</div>
+{% endblock %}

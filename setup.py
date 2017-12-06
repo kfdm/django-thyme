@@ -27,6 +27,7 @@ setup(
     ],
     entry_points={
         'powerplug.apps': ['thyme = thyme'],
-        'powerplug.rest': ['snapshot = thyme.rest:SnapshotViewSet']
+        'powerplug.rest': ['snapshot = thyme.rest:SnapshotViewSet'],
+        'powerplug.urls': ['thyme = thyme.urls'],
     },
 )

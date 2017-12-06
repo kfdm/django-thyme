@@ -12,6 +12,9 @@ class Snapshot(models.Model):
 
     raw = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ['-timestamp']
+
 
 class Blacklist(models.Model):
     owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
