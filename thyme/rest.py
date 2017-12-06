@@ -13,7 +13,10 @@ class SnapshotViewSet(viewsets.ModelViewSet):
     authentication_classes = (SessionAuthentication, TokenAuthentication)
     queryset = models.Snapshot.objects.all()
     serializer_class = serializers.SnapshotSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(
