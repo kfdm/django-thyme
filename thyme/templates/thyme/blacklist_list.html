@@ -2,13 +2,13 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Snapshots</h1>
+    <h1>Blacklist</h1>
 </div>
 
 <nav aria-label="breadcrumb" role="navigation">
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'thyme:snapshot-list' %}">Thyme</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Snapshots</li>
+    <li class="breadcrumb-item active" aria-current="page">Blacklist</li>
   </ol>
 </nav>
 
@@ -17,15 +17,12 @@
     <table class="table table-bordered">
 {% for object in object_list %}
         <tr>
-            <td>{{ object.timestamp }}</td>
             <td>{{ object.slug }}</td>
-            <td>{{ object.score }}</td>
-            <td>{{ object.active }}</td>
             <td>
                 <form method="post" action="{% url 'thyme:blacklist-list' %}">
                     {% csrf_token %}
-                    <input type="hidden" value="{{object.slug}}" name="create" />
-                    <button class="btn btn-danger">Blacklist</button>
+                    <input type="hidden" value="{{object.slug}}" name="delete" />
+                    <button class="btn btn-danger">Remove</button>
                 </form>
             </td>
         </tr>

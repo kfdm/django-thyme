@@ -21,4 +21,5 @@ class Blacklist(models.Model):
     slug = models.CharField(max_length=128)
 
     class Meta:
+        ordering = ['slug']
         unique_together = (("owner", "slug"),)
