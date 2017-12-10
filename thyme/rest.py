@@ -1,4 +1,5 @@
 import json
+import logging
 
 from dateutil.parser import parse
 from rest_framework import permissions, viewsets
@@ -7,6 +8,8 @@ from rest_framework.authentication import (SessionAuthentication,
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from thyme import models, serializers
+
+logger = logging.getLogger(__name__)
 
 
 class SnapshotViewSet(viewsets.ModelViewSet):
@@ -29,7 +32,11 @@ class SnapshotViewSet(viewsets.ModelViewSet):
         count = 0
         body = json.loads(request.body.decode("utf-8"))
         ts = parse(body['timeCollected']).replace(second=0, microsecond=0)
+        blacklist = list(models.Blacklist.objects.filter(owner=request.user).values_list('slug', flat=True))
         for app in body.get('runningProcesses', []):
+            if app['appBundle'] in blacklist:
+                logger.debug('Skiping %s due to blacklist', app['appBundle'])
+                continue
             models.Snapshot.objects.create(
                 owner=request.user,
                 timestamp=ts,

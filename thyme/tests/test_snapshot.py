@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from thyme.models import Snapshot
+from thyme.models import Blacklist, Snapshot
 
 DIR_NAME = os.path.dirname(__file__)
 
@@ -24,6 +24,19 @@ class TestImport(TestCase):
             )
         self.assertEqual(response.status_code, 200)
         self.assertEqual(Snapshot.objects.count(), 2, 'Should result in 2 Snapshots')
+
+    @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
+    def test_blacklist(self):
+        self.client.force_login(self.user)
+        Blacklist.objects.create(owner=self.user, slug='com.google.Chrome')
+        with open(os.path.join(DIR_NAME, 'test.macos.json')) as fp:
+            response = self.client.post(
+                path=reverse('api:snapshot-macos'),
+                data=fp.read(),
+                content_type='application/json'
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(Snapshot.objects.count(), 1, 'Should result in 1 Snapshots')
 
     @override_settings(CELERY_TASK_ALWAYS_EAGER=True)
     def est_cli(self):
